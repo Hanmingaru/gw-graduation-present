@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { CELL, LOOPS, STRIP_REPS } from './slotConfig'
+import { CELL, LOOPS, STRIP_REPS, symbolImage, symbolEmoji } from './slotConfig'
 
 // A single reel: a clipped window over a tall vertical strip of symbols that
 // slides down and decelerates onto `target` whenever `spinId` changes.
@@ -45,11 +45,18 @@ function Reel({ symbols, target, duration, spinId, onStop }) {
     <div className="reel-frame">
       <div className="reel">
         <div className="reel-strip" ref={stripRef}>
-          {cells.map((s, idx) => (
-            <div className="reel-cell" key={idx}>
-              <span className="symbol">{s}</span>
-            </div>
-          ))}
+          {cells.map((s, idx) => {
+            const img = symbolImage(s)
+            return (
+              <div className="reel-cell" key={idx}>
+                {img ? (
+                  <img className="symbol symbol-img" src={img} alt={s} />
+                ) : (
+                  <span className="symbol">{symbolEmoji(s)}</span>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

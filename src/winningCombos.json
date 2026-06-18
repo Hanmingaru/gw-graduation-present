@@ -1,0 +1,13 @@
+{
+  "small": [
+    ["cherry", "cherry", "orange"],
+    ["cherry", "cherry", "pineapple"]
+  ],
+  "medium": [
+    ["orange", "orange", "cherry"],
+    ["orange", "orange", "pineapple"]
+  ],
+  "large": [
+    ["pineapple", "pineapple", "pineapple"]
+  ]
+}

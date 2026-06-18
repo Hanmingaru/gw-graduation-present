@@ -96,8 +96,19 @@
   user-select: none;
 }
 
+.symbol-img {
+  width: 96px;
+  height: 96px;
+  object-fit: contain;
+  -webkit-user-drag: none;
+}
+
 /* ---------- Spin button ---------- */
 .spin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
   font-family: inherit;
   font-size: 28px;
   font-weight: 800;
@@ -118,6 +129,16 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+.spin-cost,
+.spin-coin {
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.spin-cost {
+  font-size: 1.2em;
+}
+
 .spin-button:hover:not(:disabled) {
   filter: brightness(1.06);
 }
@@ -133,6 +154,103 @@
 .spin-button:disabled {
   cursor: default;
   filter: grayscale(0.35) brightness(0.85);
+}
+
+/* ---------- Coin count ---------- */
+.coin-count {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffd76b;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+  letter-spacing: 1px;
+}
+
+/* ---------- Coin bank (10 columns x 10 coins, side view) ---------- */
+.coin-bank {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 8px;
+}
+
+/* each column is a fixed-height stage; coins are absolutely stacked from its
+   bottom so a short stack hugs the baseline (no dead space above). */
+.coin-column {
+  position: relative;
+  width: 34px;
+  height: 78px; /* COINS_PER_COLUMN * spacing + coin height */
+}
+
+.coin {
+  position: absolute;
+  left: 0;
+  width: 34px;
+  height: 13px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #ffe488 0%, #f0b730 45%, #b07d09 100%);
+  border: 1px solid #8a6206;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.45),
+    inset 0 1px 1px rgba(255, 255, 255, 0.7);
+  animation: coin-drop 220ms ease-out;
+}
+
+@keyframes coin-drop {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ---------- Restart button ---------- */
+.restart-button {
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 800;
+  color: #5e4204;
+  padding: 10px 28px;
+  border-radius: 12px;
+  border: 3px solid #ffe9a8;
+  background: linear-gradient(180deg, #ffe07a 0%, #e8b423 45%, #b5860c 100%);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.45);
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.restart-button:hover {
+  filter: brightness(1.06);
+}
+
+/* ---------- Jackpot overlay ---------- */
+.jackpot-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 10;
+}
+
+.jackpot-card {
+  text-align: center;
+  padding: 36px 48px;
+  border-radius: 24px;
+  background: linear-gradient(160deg, #c9971f 0%, #a8780f 45%, #7c5806 100%);
+  border: 6px solid #ffe9a8;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.6);
+  color: #fff8e1;
+}
+
+.jackpot-card h1 {
+  margin: 0 0 8px;
+  font-size: 40px;
+}
+
+.jackpot-card p {
+  margin: 0 0 22px;
+  font-size: 18px;
 }
 
 /* ---------- Small screens ----------
