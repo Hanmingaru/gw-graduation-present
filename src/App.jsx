@@ -1,30 +1,58 @@
+import { useState } from 'react'
 import './App.css'
-
-// Iteration 1: purely visual. Three reels showing a placeholder symbol,
-// inside a bounded cabinet, with a static pull-down lever on the right.
-// No spin logic / animation yet — that comes with the wiring iteration.
-const REELS = ['🍒', '🍒', '🍒']
+import { SYMBOLS, DURATIONS } from './slotConfig'
+import Reel from './Reel'
+import {
+  primeAudio,
+  playLeverSound,
+  playReelStopSound,
+  startSpinLoop,
+  stopSpinLoop,
+} from './sound'
 
 function App() {
+  const [spinId, setSpinId] = useState(0)
+  const [targets, setTargets] = useState([0, 0, 0])
+  const [spinning, setSpinning] = useState(false)
+
+  const spin = () => {
+    if (spinning) return
+    setTargets([0, 1, 2].map(() => Math.floor(Math.random() * SYMBOLS.length)))
+    setSpinId((id) => id + 1)
+    setSpinning(true)
+
+    primeAudio() // unlock timer-fired sounds on iOS (runs once)
+    playLeverSound()
+    startSpinLoop()
+
+    const maxDuration = Math.max(...DURATIONS)
+    setTimeout(() => {
+      setSpinning(false)
+      stopSpinLoop()
+    }, maxDuration + 150)
+  }
+
   return (
     <div className="stage">
       <div className="machine">
         <div className="cabinet">
           <div className="reels">
-            {REELS.map((symbol, i) => (
-              <div className="reel" key={i}>
-                <span className="symbol">{symbol}</span>
-              </div>
+            {targets.map((t, i) => (
+              <Reel
+                key={i}
+                symbols={SYMBOLS}
+                target={t}
+                duration={DURATIONS[i]}
+                spinId={spinId}
+                onStop={playReelStopSound}
+              />
             ))}
           </div>
         </div>
 
-        {/* Static lever — bolted to the cabinet's right edge */}
-        <div className="lever" aria-hidden="true">
-          <div className="lever-mount" />
-          <div className="lever-rod" />
-          <div className="lever-knob" />
-        </div>
+        <button className="spin-button" onClick={spin} disabled={spinning}>
+          CLICK ME!
+        </button>
       </div>
     </div>
   )
