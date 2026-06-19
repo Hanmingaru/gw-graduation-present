@@ -1,13 +1,13 @@
 {
-  "small": [
-    ["cherry", "cherry", "orange"],
-    ["cherry", "cherry", "pineapple"]
+  "jackpot": ["jackpot"],
+  "small": ["puff", "morepuff", "mescrubs", "kysleep", "ogsleep","wtf"],
+  "medium": ["couple1","siroo","wedding", "first-watch", 
+    ["mefivehead","heart","fivehead"],
+    ["mepie", "heart", "pie"],
+    ["meshirt", "heart", "tshirt"],
+    ["mebanana", "heart", "banana"],
+    ["megoat","heart","goat"],
+    ["meguitar","heart","guitar"]
   ],
-  "medium": [
-    ["orange", "orange", "cherry"],
-    ["orange", "orange", "pineapple"]
-  ],
-  "large": [
-    ["pineapple", "pineapple", "pineapple"]
-  ]
+  "large": ["boba","ghost","laoban","metal-glasses","sleep"]
 }

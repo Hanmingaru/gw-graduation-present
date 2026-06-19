@@ -12,6 +12,7 @@ import {
 } from './slotConfig'
 import Reel from './Reel'
 import CoinBank from './CoinBank'
+import winMessage from './winMessage.txt?raw'
 import { fireJackpot, clearCelebration } from './celebration'
 import {
   primeAudio,
@@ -142,7 +143,7 @@ function App() {
         <div className="jackpot-overlay">
           <div className="jackpot-card">
             <h1>🎉 JACKPOT! 🎉</h1>
-            <p>You hit 100 coins and won the game!</p>
+            <p style={{ whiteSpace: 'pre-line' }}>{winMessage.trim()}</p>
             <button className="restart-button" onClick={restart}>
               Play Again
             </button>

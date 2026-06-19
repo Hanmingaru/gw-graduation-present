@@ -234,6 +234,8 @@
 }
 
 .jackpot-card {
+  box-sizing: border-box;
+  max-width: min(90vw, 640px);
   text-align: center;
   padding: 36px 48px;
   border-radius: 24px;
@@ -251,6 +253,8 @@
 .jackpot-card p {
   margin: 0 0 22px;
   font-size: 18px;
+  text-align: left;
+  overflow-wrap: break-word;
 }
 
 /* ---------- Small screens ----------

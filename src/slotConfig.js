@@ -1,6 +1,22 @@
 // Slot machine configuration — tweak the feel of the machine here.
 
-import winningCombos from './winningCombos.json'
+import rawCombos from './winningCombos.json'
+
+// Expand the combo shorthand: a bare string means three-of-a-kind, so
+// "couple1" is sugar for ["couple1", "couple1", "couple1"]. Arrays pass through.
+function expandCombo(combo) {
+  if (typeof combo === 'string') return [combo, combo, combo]
+  return combo
+}
+
+// Normalize every bucket to full 3-symbol arrays so the rest of the file never
+// has to think about the shorthand.
+const winningCombos = Object.fromEntries(
+  Object.entries(rawCombos).map(([bucket, combos]) => [
+    bucket,
+    combos.map(expandCombo),
+  ])
+)
 
 // Placeholder renderers for each symbol name. These names are the source of
 // truth (they come from winningCombos.json) and double as image asset keys:
@@ -10,20 +26,21 @@ export const SYMBOL_EMOJI = {
   cherry: '🍒',
   pineapple: '🍍',
   orange: '🍊',
+  heart: '❤️',
 }
 
 // Auto-discover symbol art. Drop `src/symbols/<name>.png` in and it's picked up
 // at build — no import to write (same pattern as the outcome sounds). Maps a
 // symbol name to its hashed image URL.
 const symbolImages = (() => {
-  const globbed = import.meta.glob('./symbols/*.png', {
+  const globbed = import.meta.glob('./symbols/*.{png,PNG}', {
     eager: true,
     query: '?url',
     import: 'default',
   })
   const map = {}
   for (const [path, url] of Object.entries(globbed)) {
-    const name = path.split('/').pop().replace(/\.png$/, '')
+    const name = path.split('/').pop().replace(/\.png$/i, '')
     map[name] = url
   }
   return map
@@ -73,10 +90,11 @@ export const JACKPOT = COLUMNS * COINS_PER_COLUMN // 100
 // list; the losing bucket generates a non-winning, non-matching combo. `key`
 // also selects the sound folder. Weights must sum to 1.
 export const OUTCOMES = [
-  { key: 'small', reward: 5, weight: 0.4 },
-  { key: 'medium', reward: 15, weight: 0.2 },
-  { key: 'large', reward: 50, weight: 0.1 },
-  { key: 'losing', reward: 0, weight: 0.3 },
+  { key: 'jackpot', reward: JACKPOT, weight: 0.01 }, // instant win — fills the bank
+  { key: 'small', reward: 5, weight: 0.2 },
+  { key: 'medium', reward: 10, weight: 0.60 },
+  { key: 'large', reward: 50, weight: 0.09 },
+  { key: 'losing', reward: 0, weight: 0.1 },
 ]
 
 // Names of the winning buckets (everything in OUTCOMES that isn't the loss).
