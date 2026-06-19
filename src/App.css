@@ -247,7 +247,8 @@
 
 .jackpot-card h1 {
   margin: 0 0 8px;
-  font-size: 40px;
+  font-size: clamp(24px, 8vw, 40px);
+  white-space: nowrap;
 }
 
 .jackpot-card p {
