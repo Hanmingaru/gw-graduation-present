@@ -13,6 +13,7 @@ silently, so the machine still works.
 | `spin-loop.mp3` | Loops while the reels are spinning          |
 | `reel-stop.mp3` | Once per reel as each of the 3 reels lands |
 | `drop-coin.mp3` | Once per coin as a win is dealt out one by one |
+| `jackpot.mp3`   | When the rare 1% jackpot combo lands (the reels stop) |
 | `win.mp3`       | When the player reaches 100 coins (jackpot)|
 
 ## 2. Outcome sounds (random, in `src/sounds/<category>/`)

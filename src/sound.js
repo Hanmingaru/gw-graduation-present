@@ -9,6 +9,7 @@ const SOUND_BASE = `${import.meta.env.BASE_URL}sounds/`
 const lever = new Audio(`${SOUND_BASE}lever.mp3`)
 const reelStop = new Audio(`${SOUND_BASE}reel-stop.mp3`)
 const win = new Audio(`${SOUND_BASE}win.mp3`)
+const jackpot = new Audio(`${SOUND_BASE}jackpot.mp3`)
 const dropCoin = new Audio(`${SOUND_BASE}drop-coin.mp3`)
 const spinLoop = new Audio(`${SOUND_BASE}spin-loop.mp3`)
 spinLoop.loop = true
@@ -59,6 +60,7 @@ export function primeAudio() {
   const timerSounds = [
     reelStop,
     win,
+    jackpot,
     dropCoin,
     ...Object.values(outcomePools).flat(),
   ]
@@ -88,6 +90,10 @@ export function playReelStopSound() {
 
 export function playWinSound() {
   restart(win)
+}
+
+export function playJackpotSound() {
+  restart(jackpot)
 }
 
 export function playDropCoinSound() {

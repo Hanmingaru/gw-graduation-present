@@ -20,6 +20,7 @@ import {
   playReelStopSound,
   playOutcomeSound,
   playWinSound,
+  playJackpotSound,
   playDropCoinSound,
   startSpinLoop,
   stopSpinLoop,
@@ -78,7 +79,11 @@ function App() {
     setTimeout(() => {
       setSpinning(false)
       stopSpinLoop()
-      playOutcomeSound(outcome.key) // random clip from the bucket's folder
+      if (outcome.key === 'jackpot') {
+        playJackpotSound() // the rare 1% jackpot has its own single sound
+      } else {
+        playOutcomeSound(outcome.key) // random clip from the bucket's folder
+      }
 
       if (outcome.reward > 0) {
         const total = Math.min(JACKPOT, balanceAfterCost + outcome.reward)
@@ -86,7 +91,9 @@ function App() {
           if (total >= JACKPOT) {
             setWon(true)
             fireJackpot()
-            playWinSound()
+            // The 1% jackpot has its own sound; only play win.mp3 when the bank
+            // fills by accumulation.
+            if (outcome.key !== 'jackpot') playWinSound()
           }
         })
       }
